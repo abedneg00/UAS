@@ -52,14 +52,14 @@ function Login() {
     };  
   
     try {  
-      const response = await fetch('https://ubaya.xyz/react/160421142/login.php', options);  
+      const response = await fetch('https://ubaya.xyz/react/160421142/uas/login.php', options);  
       const json = await response.json();  
   
       if (json.result === 'success') {  
         await AsyncStorage.setItem('username', username);  
         alert('Login successful');  
         login(); // Use the login function from context  
-        router.replace("/kategori"); // Redirect to kategori after successful login  
+        router.replace("/categories"); // Redirect to kategori after successful login  
       } else {  
         alert('Username or password is incorrect');  
       }  

@@ -1,11 +1,11 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
-import KategoriScreen from './kategori'; // Ganti dengan path yang sesuai
-import DaftarKomikScreen from './daftarkomik/daftarkomik'; // Ganti dengan path yang sesuai
-import BacaKomikScreen from './bacakomik'; // Ganti dengan path yang sesuai
-import TambahKomikScreen from './tambahkomik'; // Ganti dengan path yang sesuai
-import CariKomikScreen from './carikomik'; // Ganti dengan path yang sesuai
+import KategoriScreen from './categories'; // Ganti dengan path yang sesuai
+import DaftarKomikScreen from './comiclist/comiclist'; // Ganti dengan path yang sesuai
+import BacaKomikScreen from './readcomic'; // Ganti dengan path yang sesuai
+import TambahKomikScreen from './addcomic'; // Ganti dengan path yang sesuai
+import CariKomikScreen from './searchcomic'; // Ganti dengan path yang sesuai
 
 const Drawer = createDrawerNavigator();
 

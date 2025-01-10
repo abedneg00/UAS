@@ -8,12 +8,12 @@ import {
   DrawerItemList,  
   DrawerItem,  
 } from '@react-navigation/drawer';  
-import BacaKomik from "./bacakomik";  
-import CariKomik from "./carikomik";  
-import TambahKomik from "./tambahkomik";  
-import Kategori from "./kategori";  
-import DaftarKomik from "./daftarkomik/daftarkomik";  
-import UpdateKomik from "./updatekomik";  
+import BacaKomik from "./readcomic";  
+import CariKomik from "./searchcomic";  
+import TambahKomik from "./addcomic";  
+import Kategori from "./categories";  
+import DaftarKomik from "./comiclist/comiclist";  
+import UpdateKomik from "./updatecomic";  
 import AsyncStorage from "@react-native-async-storage/async-storage";  
   
 function RootLayout() {  
@@ -78,18 +78,18 @@ function RootLayout() {
     <Drawer.Navigator  
       drawerContent={(props) => <CustomDrawerContent {...props} />}  
     >  
-      <Drawer.Screen name="Kategori Komik" component={Kategori}  
-        options={{ drawerLabel: 'Kategori Komik' }} />  
+      <Drawer.Screen name="Category Comic" component={Kategori}  
+        options={{ drawerLabel: 'Category Comic' }} />  
       <Drawer.Screen name="Baca Komik" component={BacaKomik}  
-        options={{ drawerLabel: 'Baca Komik' }} />  
-      <Drawer.Screen name="Daftar Komik" component={DaftarKomik}  
-        options={{ drawerLabel: 'Daftar Komik' }} />  
-      <Drawer.Screen name="Cari Komik" component={CariKomik}  
-        options={{ drawerLabel: 'Cari Komik' }} />  
-      <Drawer.Screen name="Tambah Komik" component={TambahKomik}  
-        options={{ drawerLabel: 'Tambah Komik' }} />  
-      <Drawer.Screen name="Update Komik" component={UpdateKomik}  
-        options={{ drawerLabel: 'Update Komik' }} />  
+        options={{ drawerLabel: 'Read Comic' }} />  
+      <Drawer.Screen name="List Comic" component={DaftarKomik}  
+        options={{ drawerLabel: 'List Comic' }} />  
+      <Drawer.Screen name="Search Comic" component={CariKomik}  
+        options={{ drawerLabel: 'Search Comic' }} />  
+      <Drawer.Screen name="Add Comic" component={TambahKomik}  
+        options={{ drawerLabel: 'Add Comic' }} />  
+      <Drawer.Screen name="Update Comic" component={UpdateKomik}  
+        options={{ drawerLabel: 'Update Comic' }} />  
     </Drawer.Navigator>  
   );  
 }  
