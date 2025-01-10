@@ -1,22 +1,24 @@
-import { Stack } from "expo-router";  
+import { Stack, useRouter } from "expo-router"; // Import useRouter  
 import { AuthProvider, useAuth } from "./authContext";  
-import { useEffect, useState } from "react";  
+import { useEffect } from "react";  
   
 function RootLayout() {  
   const { isLoggedIn } = useAuth(); // Get logged-in status  
-  const [isReady, setIsReady] = useState(false); // State to track if the component is ready  
+  const router = useRouter(); // Get router instance  
   
   useEffect(() => {  
-    // Set the component as ready after the first render  
-    setIsReady(true);  
-  }, []);  
-  
-  if (!isReady) {  
-    return null; // Render nothing until the component is ready  
-  }  
+    // This effect will run after the component mounts  
+    if (isLoggedIn) {  
+      // If logged in, navigate to kategori  
+      router.replace("/login");  
+    } else {  
+      // If not logged in, navigate to login  
+      router.replace("/kategori");  
+    }  
+  }, [isLoggedIn, router]); // Include router in the dependency array  
   
   return (  
-    <Stack>  
+    <Stack initialRouteName="login"> {/* Set initial route to login */}  
       <Stack.Screen name="login" options={{ title: 'Login' }} />  
       <Stack.Screen name="komedi" options={{ title: 'Komedi' }} />  
       <Stack.Screen name="action" options={{ title: 'Action' }} />  
