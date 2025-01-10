@@ -1,35 +1,96 @@
-import { Stack, useRouter } from "expo-router"; // Import useRouter  
+import { Stack, useRouter } from "expo-router"; // Import useRouter    
 import { AuthProvider, useAuth } from "./authContext";  
-import { useEffect } from "react";  
+import { useEffect, useState } from "react";  
+import React from 'react';  
+import {  
+  createDrawerNavigator,  
+  DrawerContentScrollView,  
+  DrawerItemList,  
+  DrawerItem,  
+} from '@react-navigation/drawer';  
+import BacaKomik from "./bacakomik";  
+import CariKomik from "./carikomik";  
+import TambahKomik from "./tambahkomik";  
+import Kategori from "./kategori";  
+import DaftarKomik from "./daftarkomik/daftarkomik";  
+import UpdateKomik from "./updatekomik";  
+import AsyncStorage from "@react-native-async-storage/async-storage";  
   
 function RootLayout() {  
-  const { isLoggedIn } = useAuth(); // Get logged-in status  
-  const router = useRouter(); // Get router instance  
+  const { isLoggedIn, logout } = useAuth(); // Get logged-in status and logout function    
+  const [username, setUsername] = useState<string>("");  
+  const router = useRouter(); // Get router instance    
+  const Drawer = createDrawerNavigator();  
+  
+  const cekLogin = async () => {  
+    try {  
+      const value = await AsyncStorage.getItem("username");  
+      if (value !== null) {  
+        setUsername(value);  
+      } else {  
+        setUsername("");  
+        logout();  
+      }  
+    } catch (e) {  
+      console.error("Error reading username from AsyncStorage", e);  
+      setUsername("");  
+      logout();  
+    }  
+  };  
   
   useEffect(() => {  
-    // This effect will run after the component mounts  
-    if (isLoggedIn) {  
-      // If logged in, navigate to kategori  
+    cekLogin();  
+  }, []);  
+  
+  const doLogout = async () => {  
+    try {  
+      await AsyncStorage.removeItem("username");  
+      alert("Logged out");  
+      logout();  
+      router.replace("/login");  
+    } catch (e) {  
+      console.error("Error during logout", e);  
+    }  
+  };  
+  
+  useEffect(() => {  
+    // This effect will run after the component mounts    
+    if (!isLoggedIn) {  
+      // If not logged in, navigate to login    
       router.replace("/login");  
     } else {  
-      // If not logged in, navigate to login  
+      // If logged in, navigate to kategori    
       router.replace("/kategori");  
     }  
-  }, [isLoggedIn, router]); // Include router in the dependency array  
+  }, [isLoggedIn, router]); // Include router in the dependency array    
+  
+  // Custom Drawer Content  
+  const CustomDrawerContent = (props) => {  
+    return (  
+      <DrawerContentScrollView {...props}>  
+        <DrawerItemList {...props} />  
+        <DrawerItem label="Log Out" onPress={doLogout} />  
+      </DrawerContentScrollView>  
+    );  
+  };  
   
   return (  
-    <Stack initialRouteName="login"> {/* Set initial route to login */}  
-      <Stack.Screen name="login" options={{ title: 'Login' }} />  
-      <Stack.Screen name="komedi" options={{ title: 'Komedi' }} />  
-      <Stack.Screen name="action" options={{ title: 'Action' }} />  
-      <Stack.Screen name="horror" options={{ title: 'Horror' }} />  
-      <Stack.Screen name="kategori" options={{ title: 'Kategori' }} />  
-      <Stack.Screen name="daftarkomik" options={{ title: 'Daftar Komik' }} />  
-      <Stack.Screen name="bacakomik" options={{ title: 'Baca Komik' }} />  
-      <Stack.Screen name="tambahkomik" options={{ title: 'Tambah Komik' }} />  
-      <Stack.Screen name="updatekomik" options={{ title: 'Update Komik' }} />  
-      <Stack.Screen name="carikomik" options={{ title: 'Cari Komik' }} />  
-    </Stack>  
+    <Drawer.Navigator  
+      drawerContent={(props) => <CustomDrawerContent {...props} />}  
+    >  
+      <Drawer.Screen name="Kategori Komik" component={Kategori}  
+        options={{ drawerLabel: 'Kategori Komik' }} />  
+      <Drawer.Screen name="Baca Komik" component={BacaKomik}  
+        options={{ drawerLabel: 'Baca Komik' }} />  
+      <Drawer.Screen name="Daftar Komik" component={DaftarKomik}  
+        options={{ drawerLabel: 'Daftar Komik' }} />  
+      <Drawer.Screen name="Cari Komik" component={CariKomik}  
+        options={{ drawerLabel: 'Cari Komik' }} />  
+      <Drawer.Screen name="Tambah Komik" component={TambahKomik}  
+        options={{ drawerLabel: 'Tambah Komik' }} />  
+      <Drawer.Screen name="Update Komik" component={UpdateKomik}  
+        options={{ drawerLabel: 'Update Komik' }} />  
+    </Drawer.Navigator>  
   );  
 }  
   
