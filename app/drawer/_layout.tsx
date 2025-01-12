@@ -32,11 +32,11 @@ function DrawerLayout() {
   return (
     <Drawer.Navigator>
       <Drawer.Screen name="komiku" component={Komiku} options={{ drawerLabel: "KOMIKU", title: username }} />
-      <Drawer.Screen name="categorycomic" component={Category}
+      <Drawer.Screen name="Category Comic" component={Category}
         options={{ drawerLabel: 'Category Comic' }} />
       <Drawer.Screen name="addcomic" component={AddComic}
         options={{ drawerLabel: 'Add Comic' }} />
-      <Drawer.Screen name="searchcomic" component={SearchComic}
+      <Drawer.Screen name="Search Comic" component={SearchComic}
         options={{ drawerLabel: 'Search Comic' }} />
       <Drawer.Screen name="Log Out" component={LogOut} options={{ drawerLabel: 'Log Out' }} />
     </Drawer.Navigator>

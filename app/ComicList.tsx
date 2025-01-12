@@ -77,7 +77,7 @@ const ComicList = () => {
     }  
   
     const handleComicPress = (comicId: number) => {  
-        navigation.navigate('ReadComic', { comicId }); // Ensure the route name matches      
+        navigation.navigate('readcomic', { comicId }); // Ensure the route name matches      
     };  
   
     return (  
