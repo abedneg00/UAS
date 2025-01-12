@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';  
-import { View, Text, TextInput, Button, ScrollView, Alert } from 'react-native';  
-import { Picker } from '@react-native-picker/picker'; // Ensure this import is correct  
+import { View, Text, TextInput, Button, ScrollView, Alert, ActivityIndicator } from 'react-native';  
+import { Picker } from '@react-native-picker/picker';  
 import axios from 'axios';  
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';  
+import { useRouter } from 'expo-router'; // Import useRouter for navigation  
   
-const UpdateComic = ({navigation}) => {  
-  const params = useLocalSearchParams();
-  const comicId = params.comicId; // This will get the comicId from the URL params
-  console.log("Received comicId:", comicId);  
-  
+const UpdateComic = () => {  
+  const params = useLocalSearchParams();  
+  const comicId = params.comicId;  
   
   const [title, setTitle] = useState('');  
   const [author, setAuthor] = useState('');  
@@ -16,30 +15,43 @@ const UpdateComic = ({navigation}) => {
   const [description, setDescription] = useState('');  
   const [coverImage, setCoverImage] = useState('');  
   const [categoryId, setCategoryId] = useState('');  
-  const [categories, setCategories] = useState([]); // State for categories    
+  const [categories, setCategories] = useState([]);  
+  const [loading, setLoading] = useState(true); // Loading state  
+  const router = useRouter(); // Use router for navigation  
   
   useEffect(() => {  
     const fetchComicData = async () => {  
       try {  
-        const response = await axios.get(`https://ubaya.xyz/react/160421142/uas/comics.php?comic_id=${comicId}`);  
-        const comicData = response.data;  
-        setTitle(comicData.title);  
-        setAuthor(comicData.author);  
-        setReleaseDate(comicData.release_date.split('T')[0]); // Set the release date in YYYY-MM-DD format    
-        setDescription(comicData.description);  
-        setCoverImage(comicData.cover_image);  
-        setCategoryId(comicData.category_id); // Set the category ID    
+        const response = await fetch(`https://ubaya.xyz/react/160421142/uas/comics.php?comic_id=${comicId}`);  
+        if (!response.ok) {  
+          throw new Error(`HTTP error! status: ${response.status}`);  
+        }  
+  
+        const data = await response.json();  
+        if (data.result === "success") {  
+          const comicData = data.data;  
+          setTitle(comicData.title);  
+          setAuthor(comicData.author);  
+          setReleaseDate(comicData.release_date.split(' ')[0]);  
+          setDescription(comicData.description);  
+          setCoverImage(comicData.cover_image);  
+          setCategoryId(comicData.category_id);  
+        } else {  
+          Alert.alert('Error', data.message);  
+        }  
       } catch (error) {  
-        console.error(error);  
+        console.error("Error fetching comic data:", error);  
         Alert.alert('Error', 'Failed to fetch comic data.');  
+      } finally {  
+        setLoading(false); // Set loading to false after fetching  
       }  
     };  
   
     const fetchCategories = async () => {  
       try {  
-        const response = await axios.get('https://ubaya.xyz/react/160421142/uas/category.php'); // Adjust the endpoint as needed    
+        const response = await axios.get('https://ubaya.xyz/react/160421142/uas/category.php');  
         if (response.data.result === "success") {  
-          setCategories(response.data.categories); // Assuming the response contains an array of categories    
+          setCategories(response.data.categories);  
         } else {  
           Alert.alert('Error', response.data.message);  
         }  
@@ -54,40 +66,45 @@ const UpdateComic = ({navigation}) => {
   }, [comicId]);  
   
   const handleUpdate = async () => {  
-    console.log("Updating comic with data:", {  
-      title,  
-      author,  
-      releaseDate,  
-      description,  
-      coverImage,  
-      categoryId,  
-      comicId, // Ensure comicId is defined and included    
-    });  
+    // Basic validation  
+    if (!title || !author || !releaseDate || !description || !coverImage || !categoryId) {  
+      Alert.alert('Error', 'Please fill in all fields.');  
+      return;  
+    }  
   
     try {  
-      const response = await axios.post('https://ubaya.xyz/react/160421142/uas/comics.php', {  
-        title,  
-        author,  
-        release_date: releaseDate,  
-        description,  
-        cover_image: coverImage,  
-        category_id: categoryId,  
-        comic_id: comicId, // Make sure this is included    
+      const response = await fetch('https://ubaya.xyz/react/160421142/uas/comics.php', {  
+        method: 'POST',  
+        headers: {  
+          'Content-Type': 'application/x-www-form-urlencoded',  
+        },  
+        body: new URLSearchParams({  
+          title,  
+          author,  
+          release_date: releaseDate,  
+          description,  
+          cover_image: coverImage,  
+          category_id: categoryId,  
+          comic_id: comicId, // Use the string version of comicId  
+        }),  
       });  
   
-      console.log("Response from server:", response.data);  
-  
-      if (response.data.result === 'success') {  
+      const data = await response.json();  
+      if (data.result === 'success') {  
         Alert.alert('Success', 'Comic updated successfully!');  
-        router.back();  // Ganti ini
+        router.back(); // Use router.back() for navigation  
       } else {  
-        Alert.alert('Error', response.data.message);  
+        Alert.alert('Error', data.message);  
       }  
     } catch (error) {  
       console.error("Error updating comic:", error);  
       Alert.alert('Error', 'An error occurred while updating the comic.');  
     }  
   };  
+  
+  if (loading) {  
+    return <ActivityIndicator size="large" color="#0000ff" />; // Show loading indicator  
+  }  
   
   return (  
     <ScrollView style={{ padding: 20 }}>  
