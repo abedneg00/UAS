@@ -18,7 +18,7 @@ const UpdateComic = ({ route, navigation }) => {
   useEffect(() => {  
     const fetchComicData = async () => {  
       try {  
-        const response = await axios.get('https://ubaya.xyz/react/160421142/uas/comics.php?comic_id=${comicId}');  
+        const response = await axios.get(`https://ubaya.xyz/react/160421142/uas/comics.php?comic_id=${comicId}`);  
         const comicData = response.data;  
         setTitle(comicData.title);  
         setAuthor(comicData.author);  
