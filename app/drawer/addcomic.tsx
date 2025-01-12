@@ -134,7 +134,7 @@ export default function TambahKomik ()  {
           console.log(resjson);
           if(resjson.result==='success') {
             alert('New Movie Added');
-            router.replace('/daftarkomik/daftarkomik')
+            router.replace('/ComicList')
           }
         });
     } catch (error) {
