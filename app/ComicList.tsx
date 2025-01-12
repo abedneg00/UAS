@@ -5,7 +5,7 @@ import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
 // Define the type for your route parameters      
 type RootStackParamList = {  
     ComicList: { categoryId: number };  
-    BacaKomik: { comicId: number }; // Define the expected parameters for BacaKomik      
+    ReadComic: { comicId: number }; // Define the expected parameters for BacaKomik      
 };  
   
 // Define the type for a comic      
@@ -77,7 +77,7 @@ const ComicList = () => {
     }  
   
     const handleComicPress = (comicId: number) => {  
-        navigation.navigate('BacaKomik', { comicId }); // Ensure the route name matches      
+        navigation.navigate('ReadComic', { comicId }); // Ensure the route name matches      
     };  
   
     return (  

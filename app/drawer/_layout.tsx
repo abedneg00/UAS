@@ -31,7 +31,7 @@ function DrawerLayout() {
   };
   return (
     <Drawer.Navigator>
-      <Drawer.Screen name="komiku" component={Komiku} options={{ drawerLabel: 'KOMIKU', title: username }} />
+      <Drawer.Screen name="komiku" component={Komiku} options={{ drawerLabel: "KOMIKU", title: username }} />
       <Drawer.Screen name="categorycomic" component={Category}
         options={{ drawerLabel: 'Category Comic' }} />
       <Drawer.Screen name="addcomic" component={AddComic}

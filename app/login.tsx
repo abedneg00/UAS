@@ -42,7 +42,7 @@ function Login () {
   
       if (json.result=='success') {
         try {
-          await AsyncStorage.setItem('username', username);
+          await AsyncStorage.setItem('username', username); 
           alert('Login successful');
           login(); // Use the login function from context
         } catch (e) {
