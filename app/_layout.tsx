@@ -81,16 +81,15 @@ function RootLayout() {
         options={{ drawerLabel: 'Category Comic' }} />    
       <Drawer.Screen name="BacaKomik" component={BacaKomik}    
         options={{ drawerLabel: 'Read Comic' }} />    
-      <Drawer.Screen name="List Comic" component={DaftarKomik}    
-        options={{ drawerLabel: 'List Comic' }} />    
+      <Drawer.Screen name="ComicList" component={ComicList} 
+        options={{ drawerLabel: 'Comic List' }} />   
       <Drawer.Screen name="Search Comic" component={CariKomik}    
         options={{ drawerLabel: 'Search Comic' }} />    
       <Drawer.Screen name="Add Comic" component={TambahKomik}    
         options={{ drawerLabel: 'Add Comic' }} />    
       <Drawer.Screen name="Update Comic" component={UpdateKomik}    
         options={{ drawerLabel: 'Update Comic' }} />    
-      <Drawer.Screen name="ComicList" component={ComicList} // Add ComicList here  
-        options={{ drawerLabel: 'Comic List' }} />    
+        
     </Drawer.Navigator>    
   );    
 }    
