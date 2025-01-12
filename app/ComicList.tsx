@@ -83,8 +83,8 @@ const ComicList = () => {
   
     const handleUpdatePress = (comicId: number) => {      
         console.log("Navigating to UpdateComic with ID:", comicId);      
-        navigation.navigate('updatecomic', { comicId }); // Navigate to UpdateComic      
-    };      
+        navigation.navigate('updatecomic', { comicId }); // Match the Stack.Screen name
+    };     
   
     return (        
         <View style={styles.container}>        

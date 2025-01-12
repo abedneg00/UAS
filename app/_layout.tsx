@@ -95,7 +95,7 @@ function RootLayout() {
       <Stack.Screen name="login" />
       <Stack.Screen name="drawer" options={{ headerShown: false }} />
       <Stack.Screen name="readcomic" options={{ title: 'Read Comic' }} />
-      <Stack.Screen name="udpatecomic" options={{ title: 'Update Comic' }} />
+      <Stack.Screen name="updatecomic" options={{ title: 'Update Comic' }} />
       <Stack.Screen name="listcomic" options={{ title: 'List Comic' }} />
     </Stack>
   );    

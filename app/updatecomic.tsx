@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, ScrollView, Alert } from 'react-native';  
 import { Picker } from '@react-native-picker/picker'; // Ensure this import is correct  
 import axios from 'axios';  
+import { useLocalSearchParams } from 'expo-router';
   
-const UpdateComic = ({ route, navigation }) => {  
-  const { comicId } = route.params || {}; // Safely access comicId  
+const UpdateComic = ({navigation}) => {  
+  const params = useLocalSearchParams();
+  const comicId = params.comicId; // This will get the comicId from the URL params
   console.log("Received comicId:", comicId);  
+  
   
   const [title, setTitle] = useState('');  
   const [author, setAuthor] = useState('');  
@@ -76,7 +79,7 @@ const UpdateComic = ({ route, navigation }) => {
   
       if (response.data.result === 'success') {  
         Alert.alert('Success', 'Comic updated successfully!');  
-        navigation.goBack();  
+        router.back();  // Ganti ini
       } else {  
         Alert.alert('Error', response.data.message);  
       }  
