@@ -114,7 +114,7 @@ export default function TambahKomik() {
       .then((resjson) => {
         if (resjson.result === 'success') {
           alert('New Comic Added');
-          router.replace("./drawer/");   
+          router.replace("./komiku");   
         } else {
           alert('Failed to add new comic. Please try again.');
         }
